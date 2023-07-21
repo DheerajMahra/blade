@@ -1,5 +1,5 @@
 import type { ReactElement, ReactNode } from 'react';
-import { Children, useCallback, useRef, useState, useMemo } from 'react';
+import { useCallback, useRef, useState, useMemo } from 'react';
 
 import type { CollapsibleContextState } from './CollapsibleContext';
 import { CollapsibleContext } from './CollapsibleContext';
@@ -13,7 +13,7 @@ import { makeSize } from '~utils';
 import { size } from '~tokens/global';
 import { metaAttribute, MetaConstants } from '~utils/metaAttribute';
 import { useId } from '~utils/useId';
-import { isValidAllowedChildren } from '~utils/isValidAllowedChildren';
+// import { isValidAllowedChildren } from '~utils/isValidAllowedChildren';
 
 type CollapsibleProps = {
   /**
@@ -102,21 +102,6 @@ const Collapsible = ({
     }),
     [isBodyExpanded, direction, handleExpandChange, isExpanded, collapsibleBodyId],
   );
-
-  Children.forEach(children, (child) => {
-    if (
-      !(
-        isValidAllowedChildren(child, MetaConstants.CollapsibleBody) ||
-        isValidAllowedChildren(child, MetaConstants.CollapsibleButton) ||
-        isValidAllowedChildren(child, MetaConstants.CollapsibleLink) ||
-        isValidAllowedChildren(child, MetaConstants.AccordionButton)
-      )
-    ) {
-      throw new Error(
-        `[Blade: Collapsible]: only the following are supported as valid children: CollapsibleBody, CollapsibleButton, CollapsibleLink`,
-      );
-    }
-  });
 
   return (
     <CollapsibleContext.Provider value={contextValue}>

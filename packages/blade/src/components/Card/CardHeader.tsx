@@ -8,7 +8,6 @@ import type { ButtonProps } from '../Button';
 import { Button } from '../Button';
 import { Counter } from '../Counter';
 import type { CounterProps } from '../Counter';
-import { useVerifyInsideCard, useVerifyAllowedComponents } from './CardContext';
 import { ComponentIds } from './Card';
 import { Divider } from '~components/Divider';
 import BaseBox from '~components/Box/BaseBox';
@@ -20,11 +19,9 @@ import { metaAttribute, MetaConstants } from '~utils/metaAttribute';
 import type { TestID } from '~utils/types';
 import { assignWithoutSideEffects } from '~utils/assignWithoutSideEffects';
 import { makeSpace } from '~utils/makeSpace';
-import { getComponentId, isValidAllowedChildren } from '~utils/isValidAllowedChildren';
+// import { getComponentId, isValidAllowedChildren } from '~utils/isValidAllowedChildren';
 
 const _CardHeaderIcon = ({ icon: Icon }: { icon: IconComponent }): React.ReactElement => {
-  useVerifyInsideCard('CardHeaderIcon');
-
   return <Icon color="surface.text.normal.lowContrast" size="xlarge" />;
 };
 const CardHeaderIcon = assignWithoutSideEffects(_CardHeaderIcon, {
@@ -32,8 +29,6 @@ const CardHeaderIcon = assignWithoutSideEffects(_CardHeaderIcon, {
 });
 
 const _CardHeaderCounter = (props: CounterProps): React.ReactElement => {
-  useVerifyInsideCard('CardHeaderCounter');
-
   return <Counter {...props} />;
 };
 const CardHeaderCounter = assignWithoutSideEffects(_CardHeaderCounter, {
@@ -41,8 +36,6 @@ const CardHeaderCounter = assignWithoutSideEffects(_CardHeaderCounter, {
 });
 
 const _CardHeaderBadge = (props: BadgeProps): React.ReactElement => {
-  useVerifyInsideCard('CardHeaderBadge');
-
   return <Badge {...props} />;
 };
 const CardHeaderBadge = assignWithoutSideEffects(_CardHeaderBadge, {
@@ -50,8 +43,6 @@ const CardHeaderBadge = assignWithoutSideEffects(_CardHeaderBadge, {
 });
 
 const _CardHeaderText = (props: TextProps<{ variant: TextVariant }>): React.ReactElement => {
-  useVerifyInsideCard('CardHeaderText');
-
   return <Text textAlign="left" {...props} />;
 };
 const CardHeaderText = assignWithoutSideEffects(_CardHeaderText, {
@@ -59,8 +50,6 @@ const CardHeaderText = assignWithoutSideEffects(_CardHeaderText, {
 });
 
 const _CardHeaderLink = (props: LinkProps): React.ReactElement => {
-  useVerifyInsideCard('CardHeaderLink');
-
   return <Link {...props} />;
 };
 const CardHeaderLink = assignWithoutSideEffects(_CardHeaderLink, {
@@ -75,8 +64,6 @@ type CardHeaderIconButtonProps = Omit<
 };
 
 const _CardHeaderIconButton = (props: CardHeaderIconButtonProps): React.ReactElement => {
-  useVerifyInsideCard('CardHeaderIconButton');
-
   return (
     <BaseBox width={makeSpace(minHeight.xsmall)}>
       <Button {...props} variant="tertiary" size="xsmall" iconPosition="left" isFullWidth />
@@ -92,12 +79,6 @@ type CardHeaderProps = {
 } & TestID;
 
 const _CardHeader = ({ children, testID }: CardHeaderProps): React.ReactElement => {
-  useVerifyInsideCard('CardHeader');
-  useVerifyAllowedComponents(children, 'CardHeader', [
-    ComponentIds.CardHeaderLeading,
-    ComponentIds.CardHeaderTrailing,
-  ]);
-
   return (
     <BaseBox
       marginBottom="spacing.7"
@@ -139,20 +120,6 @@ const _CardHeaderLeading = ({
   prefix,
   suffix,
 }: CardHeaderLeadingProps): React.ReactElement => {
-  useVerifyInsideCard('CardHeaderLeading');
-
-  if (prefix && !isValidAllowedChildren(prefix, ComponentIds.CardHeaderIcon)) {
-    throw new Error(
-      `[Blade CardHeaderLeading]: Only \`${ComponentIds.CardHeaderIcon}\` component is accepted in prefix`,
-    );
-  }
-
-  if (suffix && !isValidAllowedChildren(suffix, ComponentIds.CardHeaderCounter)) {
-    throw new Error(
-      `[Blade CardHeaderLeading]: Only \`${ComponentIds.CardHeaderCounter}\` component is accepted in prefix`,
-    );
-  }
-
   return (
     <BaseBox flex={1} display="flex" flexDirection="row">
       <BaseBox marginRight="spacing.3" alignSelf="center" display="flex">
@@ -187,24 +154,7 @@ type CardHeaderTrailingProps = {
   visual?: React.ReactNode;
 };
 
-const headerTrailingAllowedComponents = [
-  ComponentIds.CardHeaderLink,
-  ComponentIds.CardHeaderText,
-  ComponentIds.CardHeaderIconButton,
-  ComponentIds.CardHeaderBadge,
-];
-
 const _CardHeaderTrailing = ({ visual }: CardHeaderTrailingProps): React.ReactElement => {
-  useVerifyInsideCard('CardHeaderTrailing');
-
-  if (visual && !headerTrailingAllowedComponents.includes(getComponentId(visual)!)) {
-    throw new Error(
-      `[Blade CardHeaderTrailing]: Only one of \`${headerTrailingAllowedComponents.join(
-        ', ',
-      )}\` component is accepted in visual`,
-    );
-  }
-
   return <BaseBox alignSelf="center">{visual}</BaseBox>;
 };
 const CardHeaderTrailing = assignWithoutSideEffects(_CardHeaderTrailing, {

@@ -2,7 +2,6 @@
 import type { Theme } from './index';
 import { useColorScheme, useBreakpoint } from '~utils';
 import type { ColorSchemeNames, ColorSchemeNamesInput, ThemeTokens } from '~tokens/theme';
-import { colorSchemeNamesInput } from '~tokens/theme/theme';
 import type { TypographyPlatforms } from '~tokens/global';
 import type { ColorSchemeModes } from '~tokens/theme/theme';
 import { toTitleCase } from '~utils/toTitleCase';
@@ -27,18 +26,6 @@ const useBladeProvider = ({
   themeTokens: ThemeTokens;
   initialColorScheme?: ColorSchemeNamesInput;
 }): { theme: Theme; themeContextValue: ThemeContextValue } => {
-  if (!themeTokens) {
-    throw new Error(
-      `[BladeProvider]: Expected valid themeTokens of type ThemeTokens to be passed but found ${typeof themeTokens}`,
-    );
-  }
-
-  if (initialColorScheme && !colorSchemeNamesInput.includes(initialColorScheme)) {
-    throw new Error(
-      `[BladeProvider]: Expected color scheme to be one of [${colorSchemeNamesInput.toString()}] but received ${initialColorScheme}`,
-    );
-  }
-
   const { colorScheme, setColorScheme } = useColorScheme(initialColorScheme);
   const { matchedDeviceType } = useBreakpoint({
     breakpoints: themeTokens.breakpoints,

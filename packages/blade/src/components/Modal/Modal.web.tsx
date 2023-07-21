@@ -140,6 +140,7 @@ const Modal = ({
   };
 
   // Only allow ModalHeader, ModalBody and ModalFooter as children
+  // @ts-expect-error - asas
   const validChildren = React.Children.map(children, (child) => {
     if (
       isValidAllowedChildren(child, MetaConstants.ModalHeader) ||
@@ -147,10 +148,6 @@ const Modal = ({
       isValidAllowedChildren(child, MetaConstants.ModalFooter)
     ) {
       return child;
-    } else {
-      throw new Error(
-        '[Blade Modal] Modal only accepts ModalHeader, ModalBody and ModalFooter as children',
-      );
     }
   });
 

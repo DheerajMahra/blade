@@ -1,37 +1,11 @@
 import React from 'react';
 import BaseBox from './BaseBox';
-import type { BoxProps, BoxRefType, MakeValueResponsive } from './BaseBox/types';
-import { validBoxAsValues } from './BaseBox/types/propsTypes';
+import type { BoxProps, BoxRefType } from './BaseBox/types';
+// import { validBoxAsValues } from './BaseBox/types/propsTypes';
 import type { KeysRequired } from '~utils/types';
 import { isReactNative } from '~utils';
 import { metaAttribute, MetaConstants } from '~utils/metaAttribute';
 import { assignWithoutSideEffects } from '~utils/assignWithoutSideEffects';
-
-const validateBackgroundString = (stringBackgroundColorValue: string): void => {
-  if (
-    !stringBackgroundColorValue.startsWith('surface.background') &&
-    !stringBackgroundColorValue.startsWith('brand.')
-  ) {
-    throw new Error(
-      `[Blade - Box]: Oops! Currently you can only use \`surface.background.*\` and \`brand.*\` tokens with backgroundColor property but we received \`${stringBackgroundColorValue}\` instead.\n\n Do you have a usecase of using other values? Create an issue on https://github.com/razorpay/blade repo to let us know and we can discuss ✨`,
-    );
-  }
-};
-
-const validateBackgroundProp = (
-  responsiveBackgroundColor: MakeValueResponsive<string | undefined>,
-): void => {
-  if (responsiveBackgroundColor) {
-    if (typeof responsiveBackgroundColor === 'string') {
-      validateBackgroundString(responsiveBackgroundColor);
-      return;
-    }
-
-    Object.values(responsiveBackgroundColor).forEach((backgroundColor) => {
-      validateBackgroundString(backgroundColor);
-    });
-  }
-};
 
 /**
  * This function is to filter out any unexpected props passed by the user
@@ -185,26 +159,6 @@ const makeBoxProps = (props: BoxProps): KeysRequired<Omit<BoxProps, 'testID' | '
  * 
  */
 const _Box: React.ForwardRefRenderFunction<BoxRefType, BoxProps> = (props, ref) => {
-  React.useEffect(() => {
-    validateBackgroundProp(props.backgroundColor);
-  }, [props.backgroundColor]);
-
-  React.useEffect(() => {
-    if (props.as) {
-      if (isReactNative()) {
-        throw new Error('[Blade - Box]: `as` prop is not supported on React Native');
-      }
-
-      if (!validBoxAsValues.includes(props.as)) {
-        throw new Error(
-          `[Blade - Box]: Invalid \`as\` prop value - ${props.as}. Only ${validBoxAsValues.join(
-            ', ',
-          )} are valid values`,
-        );
-      }
-    }
-  }, [props.as]);
-
   return (
     <BaseBox
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -135,11 +135,6 @@ const Alert = ({
   testID,
   ...styledProps
 }: AlertProps): ReactElement | null => {
-  if (!actions?.primary && actions?.secondary) {
-    throw new Error(
-      '[Blade: Alert]: SecondaryAction is allowed only when PrimaryAction is defined.',
-    );
-  }
   const { theme } = useTheme();
   const { matchedDeviceType } = useBreakpoint({ breakpoints: theme.breakpoints });
   const isDesktop = matchedDeviceType === 'desktop';

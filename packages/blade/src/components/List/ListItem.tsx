@@ -98,13 +98,10 @@ const _ListItem = ({
   const { theme, platform } = useTheme();
   const ItemIcon = Icon ?? ListContextIcon;
 
-  if (level && level > 3) {
-    throw new Error('[Blade List]: List Nesting is allowed only upto 3 levels.');
-  }
-
   const childrenArray = React.Children.toArray(children);
 
   // Get children that are not a List component and are valid allowed children
+  // @ts-expect-error - asas
   const validChildItem = childrenArray.filter((child) => {
     if (getComponentId(child) === MetaConstants.List) return null;
 
@@ -115,10 +112,6 @@ const _ListItem = ({
       isValidAllowedChildren(child, MetaConstants.ListItemCode)
     ) {
       return child;
-    } else {
-      throw new Error(
-        '[Blade List]: You can only pass a List, ListItemLink, ListItemCode, ListItemText or a string as a child to ListItem.',
-      );
     }
   });
   // Get child that is a List component

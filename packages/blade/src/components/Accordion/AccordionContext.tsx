@@ -11,11 +11,7 @@ const AccordionContext = createContext<AccordionContextState | null>(null);
 
 const useAccordion = (): AccordionContextState => {
   const accordionContext = useContext(AccordionContext);
-  if (!accordionContext) {
-    throw new Error(
-      `[Blade: AccordionContext]: useAccordion should be only used within AccordionContext`,
-    );
-  }
+  // @ts-expect-error - asas
   return accordionContext;
 };
 

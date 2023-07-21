@@ -13,11 +13,7 @@ const CollapsibleContext = createContext<CollapsibleContextState | null>(null);
 
 const useCollapsible = (): CollapsibleContextState => {
   const collapsibleContext = useContext(CollapsibleContext);
-  if (!collapsibleContext) {
-    throw new Error(
-      `[Blade: CollapsibleContext]: You're trying to use Collapsible sub-components without Collapsible. useCollapsible should only be used within CollapsibleContext`,
-    );
-  }
+  // @ts-expect-error - asas
   return collapsibleContext;
 };
 

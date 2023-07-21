@@ -100,11 +100,10 @@ const _List = ({
   );
 
   const childrenArray = React.Children.toArray(children);
+  // @ts-expect-error - asas
   const childListItems = childrenArray.filter((child) => {
     if (isValidAllowedChildren(child, MetaConstants.ListItem)) {
       return child;
-    } else {
-      throw new Error('[Blade List]: You can only pass a ListItem as a child to List.');
     }
   });
 

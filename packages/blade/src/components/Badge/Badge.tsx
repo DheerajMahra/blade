@@ -11,7 +11,6 @@ import { metaAttribute, MetaConstants } from '~utils/metaAttribute';
 import { getStyledProps } from '~components/Box/styledProps';
 import type { StyledPropsBlade } from '~components/Box/styledProps';
 import type { StringChildrenType, TestID } from '~utils/types';
-import { getStringFromReactText } from '~src/utils/getStringChildren';
 import { assignWithoutSideEffects } from '~utils/assignWithoutSideEffects';
 import { isReactNative } from '~utils';
 
@@ -99,10 +98,6 @@ const _Badge = ({
   testID,
   ...styledProps
 }: BadgeProps): ReactElement => {
-  const childrenString = getStringFromReactText(children);
-  if (!childrenString?.trim()) {
-    throw new Error('[Blade: Badge]: Text as children is required for Badge.');
-  }
   const { backgroundColor, iconColor, textColor } = getColorProps({
     variant,
     contrast,

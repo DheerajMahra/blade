@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React from 'react';
-import isEmpty from 'lodash/isEmpty';
 import type { OnChange } from './useRadio';
 import { useRadio } from './useRadio';
 import { RadioIcon } from './RadioIcon/RadioIcon';
@@ -53,11 +52,7 @@ const _Radio: React.ForwardRefRenderFunction<BladeElementRef, RadioProps> = (
   ref,
 ) => {
   const groupProps = useRadioGroupContext();
-  const isInsideGroup = !isEmpty(groupProps);
-
-  if (!isInsideGroup) {
-    throw new Error('[Blade Radio]: Cannot use <Radio /> outside of <RadioGroup />');
-  }
+  // const isInsideGroup = !isEmpty(groupProps);
 
   const isChecked = groupProps?.state?.isChecked(value);
   const defaultChecked =

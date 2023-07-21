@@ -4,20 +4,20 @@ import type { DropdownContextType } from './useDropdown';
 import { componentIds } from './dropdownUtils';
 import type { DropdownProps } from './types';
 import { useId } from '~utils/useId';
-import { ComponentIds as bottomSheetComponentIds } from '~components/BottomSheet/componentIds';
+// import { ComponentIds as bottomSheetComponentIds } from '~components/BottomSheet/componentIds';
 import { BottomSheetAndDropdownGlueContext } from '~components/BottomSheet/BottomSheetContext';
 import { getStyledProps } from '~components/Box/styledProps';
 import BaseBox from '~components/Box/BaseBox';
 import { assignWithoutSideEffects } from '~utils/assignWithoutSideEffects';
-import { getComponentId, isValidAllowedChildren } from '~utils/isValidAllowedChildren';
+import { isValidAllowedChildren } from '~utils/isValidAllowedChildren';
 
-const validDropdownChildren = [
-  componentIds.triggers.SelectInput,
-  componentIds.triggers.DropdownButton,
-  componentIds.triggers.DropdownLink,
-  componentIds.DropdownOverlay,
-  bottomSheetComponentIds.BottomSheet,
-];
+// const validDropdownChildren = [
+//   componentIds.triggers.SelectInput,
+//   componentIds.triggers.DropdownButton,
+//   componentIds.triggers.DropdownLink,
+//   componentIds.DropdownOverlay,
+//   bottomSheetComponentIds.BottomSheet,
+// ];
 
 /**
  * ### Dropdown component
@@ -99,14 +99,6 @@ const _Dropdown = ({
 
   React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
-      if (!validDropdownChildren.includes(getComponentId(child) ?? '')) {
-        throw new Error(
-          `[Dropdown]: Dropdown can only have one of following elements as children - \n\n ${validDropdownChildren.join(
-            ', ',
-          )} \n\n Check out: https://blade.razorpay.com/?path=/story/components-dropdown`,
-        );
-      }
-
       if (isValidAllowedChildren(child, componentIds.triggers.SelectInput)) {
         dropdownTriggerer.current = 'SelectInput';
       }

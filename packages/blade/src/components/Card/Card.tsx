@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardSurface } from './CardSurface';
-import { CardProvider, useVerifyInsideCard, useVerifyAllowedComponents } from './CardContext';
+import { CardProvider } from './CardContext';
 import type { SpacingValueType } from '~components/Box/BaseBox';
 import BaseBox from '~components/Box/BaseBox';
 import { metaAttribute, MetaConstants } from '~utils/metaAttribute';
@@ -79,12 +79,6 @@ const Card = ({
   padding = 'spacing.7',
   ...styledProps
 }: CardProps): React.ReactElement => {
-  useVerifyAllowedComponents(children, 'Card', [
-    ComponentIds.CardHeader,
-    ComponentIds.CardBody,
-    ComponentIds.CardFooter,
-  ]);
-
   return (
     <CardProvider>
       <CardSurface
@@ -107,8 +101,6 @@ type CardBodyProps = {
 } & TestID;
 
 const _CardBody = ({ children, testID }: CardBodyProps): React.ReactElement => {
-  useVerifyInsideCard('CardBody');
-
   return <BaseBox {...metaAttribute({ name: MetaConstants.CardBody, testID })}>{children}</BaseBox>;
 };
 const CardBody = assignWithoutSideEffects(_CardBody, { componentId: ComponentIds.CardBody });

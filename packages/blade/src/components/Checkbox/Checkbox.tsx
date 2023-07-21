@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React from 'react';
-import isUndefined from 'lodash/isUndefined';
-import isEmpty from 'lodash/isEmpty';
 import { useCheckboxGroupContext } from './CheckboxGroup/CheckboxGroupContext';
 import { CheckboxIcon } from './CheckboxIcon';
 import { useCheckbox } from './useCheckbox';
@@ -134,41 +132,6 @@ const _Checkbox: React.ForwardRefRenderFunction<BladeElementRef, CheckboxProps> 
   const groupProps = useCheckboxGroupContext();
 
   // ban certain props in checkbox while inside group
-  const hasValidationState = !isUndefined(validationState);
-  const hasName = !isUndefined(name);
-  const hasDefaultChecked = !isUndefined(defaultChecked);
-  const hasIsChecked = !isUndefined(isChecked);
-  const hasOnChange = !isUndefined(onChange);
-  if (
-    (hasValidationState || hasName || hasDefaultChecked || hasIsChecked || hasOnChange) &&
-    !isEmpty(groupProps)
-  ) {
-    const props = [
-      hasValidationState ? 'validationState' : undefined,
-      hasName ? 'name' : undefined,
-      hasDefaultChecked ? 'defaultChecked' : undefined,
-      hasIsChecked ? 'isChecked' : undefined,
-      hasOnChange ? 'onChange' : undefined,
-    ]
-      .filter(Boolean)
-      .join(',');
-
-    throw new Error(
-      `[Blade Checkbox]: Cannot set \`${props}\` on <Checkbox /> when it's inside <CheckboxGroup />, Please set it on the <CheckboxGroup /> itself`,
-    );
-  }
-
-  // mandate value prop when using inside group
-  if (!value && !isEmpty(groupProps)) {
-    throw new Error(
-      `[Blade Checkbox]: <CheckboxGroup /> requires that you pass unique "value" prop to each <Checkbox />
-      <CheckboxGroup>
-        <Checkbox value="apple">Apple</Checkbox>
-        <Checkbox value="mango">Mango</Checkbox>
-      </CheckboxGroup>
-      `,
-    );
-  }
 
   const _validationState = validationState ?? groupProps?.validationState;
   const _hasError = _validationState === 'error';

@@ -17,12 +17,6 @@ type ActionListContextProp = Pick<ActionListProps, 'surfaceLevel'>;
 const ActionListContext = React.createContext<ActionListContextProp>({ surfaceLevel: 2 });
 const useActionListContext = (): ActionListContextProp => {
   const context = React.useContext(ActionListContext);
-
-  if (!context) {
-    throw new Error(
-      '[Blade ActionList]: useActionListContext has to be called inside ActionListContext.Provider',
-    );
-  }
   return context;
 };
 

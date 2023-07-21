@@ -270,24 +270,24 @@ export type BaseInputProps = FormInputLabelProps &
   }> &
   StyledPropsBlade;
 
-const autoCompleteSuggestionTypeValues = [
-  'none',
-  'on',
-  'name',
-  'email',
-  'username',
-  'password',
-  'newPassword',
-  'oneTimeCode',
-  'telephone',
-  'postalCode',
-  'countryName',
-  'creditCardNumber',
-  'creditCardCSC',
-  'creditCardExpiry',
-  'creditCardExpiryMonth',
-  'creditCardExpiryYear',
-];
+// const autoCompleteSuggestionTypeValues = [
+//   'none',
+//   'on',
+//   'name',
+//   'email',
+//   'username',
+//   'password',
+//   'newPassword',
+//   'oneTimeCode',
+//   'telephone',
+//   'postalCode',
+//   'countryName',
+//   'creditCardNumber',
+//   'creditCardCSC',
+//   'creditCardExpiry',
+//   'creditCardExpiryMonth',
+//   'creditCardExpiryYear',
+// ];
 
 const useInput = ({
   value,
@@ -320,12 +320,6 @@ const useInput = ({
   handleOnKeyDown: FormInputHandleOnKeyDownEvent;
   inputValue?: string;
 } => {
-  if (value && defaultValue) {
-    throw new Error(
-      `[Blade: Input]: Either 'value' or 'defaultValue' shall be passed. This decides if the input field is controlled or uncontrolled`,
-    );
-  }
-
   const [inputValue, setInputValue] = React.useState(defaultValue ?? value);
 
   const handleOnFocus: FormInputHandleOnEvent = React.useCallback(
@@ -627,17 +621,6 @@ export const BaseInput = React.forwardRef<HTMLInputElement, BaseInputProps>(
     });
 
     const willRenderHintText = Boolean(helpText) || Boolean(successText) || Boolean(errorText);
-
-    if (
-      autoCompleteSuggestionType &&
-      !autoCompleteSuggestionTypeValues.includes(autoCompleteSuggestionType)
-    ) {
-      throw new Error(
-        `[Blade: Input]: Expected autoCompleteSuggestionType to be one of ${autoCompleteSuggestionTypeValues.join(
-          ', ',
-        )} but received ${autoCompleteSuggestionType}`,
-      );
-    }
 
     const isTextArea = as === 'textarea';
     const isReactNative = getPlatformType() === 'react-native';

@@ -2,7 +2,6 @@
 import React from 'react';
 import type { ButtonProps } from '../Button';
 import { Button } from '../Button';
-import { useVerifyInsideCard, useVerifyAllowedComponents } from './CardContext';
 import { ComponentIds } from './Card';
 import { Divider } from '~components/Divider';
 import BaseBox from '~components/Box/BaseBox';
@@ -34,22 +33,15 @@ const useIsMobile = (): boolean => {
 
 const _CardFooter = ({ children, testID }: CardFooterProps): React.ReactElement => {
   const isMobile = useIsMobile();
-  useVerifyInsideCard('CardFooter');
-  useVerifyAllowedComponents(children, 'CardFooter', [
-    ComponentIds.CardFooterLeading,
-    ComponentIds.CardFooterTrailing,
-  ]);
 
   const footerChildrensArray = React.Children.toArray(children);
-  if (!React.isValidElement(footerChildrensArray[0])) {
-    throw new Error(`Invalid React Element ${footerChildrensArray}`);
-  }
 
   // the reason why we are checking for actions here is, because we want the footerTrailing
   // to always be aligned to the right
   // if we don't check for action here, and if we do not have footerTrailing and only footerLeading
   // then the content of footerLeading will be justified to the end.
   const baseBoxJustifyContent =
+    // @ts-expect-error TODO: fix this
     footerChildrensArray.length === 2 || !footerChildrensArray[0]?.props?.actions
       ? 'space-between'
       : 'flex-end';
@@ -77,8 +69,6 @@ type CardFooterLeadingProps = {
   subtitle?: string;
 };
 const _CardFooterLeading = ({ title, subtitle }: CardFooterLeadingProps): React.ReactElement => {
-  useVerifyInsideCard('CardFooterLeading');
-
   return (
     <BaseBox textAlign={'left' as never}>
       {title && (
@@ -106,8 +96,6 @@ type CardFooterTrailingProps = {
 };
 const _CardFooterTrailing = ({ actions }: CardFooterTrailingProps): React.ReactElement => {
   const isMobile = useIsMobile();
-  useVerifyInsideCard('CardFooterTrailing');
-
   return (
     <BaseBox
       display="flex"

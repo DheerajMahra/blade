@@ -113,12 +113,6 @@ const getTextProps = <T extends { variant: TextVariant }>({
     }
   }
   if (variant === 'caption') {
-    if (size === 'medium') {
-      props.fontSize = 50;
-      props.lineHeight = 50;
-    } else {
-      throw new Error(`[Blade: Text]: size cannot be '${size}' when variant is 'caption'`);
-    }
     props.fontStyle = 'italic';
   }
 

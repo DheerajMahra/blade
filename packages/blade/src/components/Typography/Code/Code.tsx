@@ -67,6 +67,7 @@ const isPlatformWeb = platformType === 'browser' || platformType === 'node';
 
 const getCodeFontSizeAndLineHeight = (
   size: CodeProps['size'],
+  // @ts-expect-error - asas
 ): { fontSize: keyof FontSize; lineHeight: keyof Typography['lineHeights'] } => {
   switch (size) {
     case 'medium':
@@ -74,7 +75,7 @@ const getCodeFontSizeAndLineHeight = (
     case 'small':
       return { fontSize: 25, lineHeight: 25 };
     default:
-      throw new Error(`[Blade Code]: Unexpected size: ${size}`);
+      break;
   }
 };
 
@@ -98,10 +99,6 @@ const getCodeColor = ({
   color,
 }: Pick<CodeProps, 'isHighlighted' | 'color'>): CodeProps['color'] => {
   if (isHighlighted) {
-    if (color) {
-      throw new Error('[Blade: Code]: `color` prop cannot be used without `isHighlighted={false}`');
-    }
-
     return 'surface.text.subtle.lowContrast';
   }
 

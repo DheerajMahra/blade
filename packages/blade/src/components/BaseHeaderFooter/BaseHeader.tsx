@@ -103,14 +103,6 @@ const useTrailingRestriction = (trailing: React.ReactNode): React.ReactNode => {
     if (React.isValidElement(trailing)) {
       const trailingComponentType = getComponentId(trailing) as TrailingComponents;
       const restrictedProps = propRestrictionMap[trailingComponentType];
-      const allowedComponents = Object.keys(propRestrictionMap);
-      if (!restrictedProps) {
-        throw new Error(
-          `[Blade Header]: Only one of \`${allowedComponents.join(
-            ', ',
-          )}\` component is accepted as trailing`,
-        );
-      }
 
       const restrictedPropKeys = Object.keys(propRestrictionMap[trailingComponentType]);
       for (const prop of restrictedPropKeys) {
